@@ -31,7 +31,11 @@ Ejecutar por consola
 
 Para ejecutar calculo de entropía de los datasets (Item 1):
 
-> ./ej_1
+> ./ej_1 data/8x8
+
+> ./ej_1 data/128x128
+
+> ./ej_1 data/512x512
 
 Para ejecutar items del 2 al 5:
 
