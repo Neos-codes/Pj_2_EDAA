@@ -40,7 +40,7 @@ int Load_mat_2_int_vec(std::vector<int> &e, int n_elements, sdsl::bit_vector &b,
     // Incrementar cantidad de elementos
     n_elements++;
   }
-  // retorna elementos en el int_vector
+  // retorna elementos en el bitmap
   return n_elements;
 }
 
@@ -57,18 +57,13 @@ sdsl::int_vector<> *vector_2_int_vector(std::vector<int> &e){
 }
 
 
-// Funcion principal para cargar los datasets y crear un int_vec con los elementos
-// que no se repiten
-// Recibe como parametro un bitmap &b que almacenará 0's y 1's dependiendo si los
-// elementos dejan de repetirse
-sdsl::int_vector<> *Load_dataset(sdsl::bit_vector &b, std::string route){
+// Retorna los nombres de los archivos en el dataset ordenados alfabeticamente
+// para mantener el orden de las matrices en el tiempo
+std::vector<std::string> Dataset_docs(std::string route){
 
-  std::cout << "Loading dataset... " << route << std::endl;
-  std::vector<int> e;
+  // Vector de nombres de archivos
   std::vector<std::string> docs;
-  
-  int elements = 0;
-  bool has_ext = false;
+
   // Estructura para guardar archivos
   struct dirent *dir;
   // Abrir directorio de ruta ingresada
@@ -89,19 +84,34 @@ sdsl::int_vector<> *Load_dataset(sdsl::bit_vector &b, std::string route){
       if(!ext.compare(".txt")){
 	// Aqui leemos el nombre del archivo y se lo damos a un vector de strings
 	docs.push_back(doc);
-	//elements = Load_mat_2_int_vec(e, elements, b, route + "/" + doc);
       }
     }
-
+  }
     // Ordenamos alfabeticamente los documentos para mantener el orden para M_i
     sort(docs.begin(), docs.end());
+
+    return docs;
+}
+
+// Funcion principal para cargar los datasets y crear un int_vec con los elementos
+// que no se repiten
+// Recibe como parametro un bitmap &b que almacenará 0's y 1's dependiendo si los
+// elementos dejan de repetirse
+sdsl::int_vector<> *Load_dataset(sdsl::bit_vector &b, std::string route){
+
+  std::cout << "Loading dataset... " << route << std::endl;
+  std::vector<int> e;
+  std::vector<std::string> docs;
+  
+  int elements = 0;
+
+  docs = Dataset_docs(route);
 
     // Cargar todos los archivos en un int_vec
     for(int i = 0; i < docs.size(); i++){
       //std::cout << docs[i] << std::endl;
       elements = Load_mat_2_int_vec(e, elements, b, route + "/" + docs[i]);
     }
-  }
 
   // Retornar un int_vec de todas las matrices
   return vector_2_int_vector(e);
@@ -131,4 +141,98 @@ void Print_vector(std::vector<int> &v, std::string name){
   }
   std::cout << std::endl;
   
+}
+
+int Mats_diff(sdsl::bit_vector &b, std::vector<int> &diffs, int n_elements, std::string route_1, std::string route){
+
+  // Abrimos docs con matrices del dataset a calcular diferencia
+  std::ifstream mat_1(route_1);   // matriz en t - 1
+  std::ifstream mat(route);       // matriz en t
+
+  int num;     // valor (x_t, y_t)
+  int num_1;   // valor (x_(t-1), y_(t-1)
+
+  // Si es el primer elemento que se lee, obligatoriamente se pushea un 1 al bitmap
+  // y la diferencia al vector de diferencias
+  if(diffs.size() == 0){
+    std::cout << "Diff size = " << diffs.size() << std::endl;
+    // Tomamos numeros para calcular diferencia
+    mat >> num;
+    mat_1 >> num_1;
+
+    // Pushear 1 al bitmap
+    b[n_elements] = 1;
+    // Pushear diferencia al vector de diferencias
+    diffs.push_back(num - num_1);
+    n_elements++;
+  }
+
+  // Extraemos un numero de la matriz actual
+  while(mat >> num){
+    // Extraemos un numero de la matriz anterior
+    mat_1 >> num_1;
+
+    // Obtener diferencia
+    int dif = num - num_1;
+    
+    // Si la diferencia entre los 2 elementos actuales es igual a la diferencia
+    // anterior, pushear un 0 en bitmap por ser elemento repetido
+    if(dif == diffs.back())
+      b[n_elements] = 0;
+    // Si las diferencias son distintas, pushear un 1 en bitmap y la diferencia
+    // en el vector de diferencias
+    else{
+      b[n_elements] = 1;
+      diffs.push_back(num - num_1);
+      //std::cout << "num: " << num << " num_1: " << num_1 << " dif: " << diffs.back() << std::endl;
+    }
+    n_elements++;
+  }
+
+  // Retornamos la cantidad de elementos actuales que tiene el bitmap
+  return n_elements;
+}
+
+sdsl::int_vector<> *Load_dataset_diff(sdsl::bit_vector &b, std::string route, sdsl::int_vector<> &base){
+
+  std::cout << "Loading dataset diff... " << route << std::endl;
+  std::vector<int> e;
+  std::vector<std::string> docs;
+  
+  int elements = 0;
+
+  docs = Dataset_docs(route);
+
+  // Cargar matriz en t = 0 en raw para luego operar sobre ella e implementar
+  // el ejercicio 7
+  std::ifstream file(route + "/" + docs[0]);
+  int num;
+  // Abrir archivo
+  if(!file.is_open()){
+    std::cout << "Error al abrir archivo " << route << std::endl;
+    return 0;
+  }
+
+  int it = 0;
+  while(file >> num){
+    base[it] = num;     // El int_vector base debe tener tamanio definido
+    it++;
+  }
+  
+  // Cerrar archivo
+  file.close();
+
+  // Creamos un vector de enteros que guardará las diferencias de temperaturas
+  // entre M_i y M_(i-1)
+  std::vector<int> diffs;
+  
+  // Cargar diferencias en vector de diferencias y llenar el bitmap por cada matriz
+  // en el dataset
+  for(int i = 1; i < 120; i++)
+    elements = Mats_diff(b, diffs, elements, route + "/" + docs[i - 1], route + "/" + docs[i]);
+
+  //Print_vector(diffs, "Diff vector");
+  
+  // Retornamos un int_vector con las diferencias de las matrices M_i  y M_(i-1)
+  return vector_2_int_vector(diffs);
 }

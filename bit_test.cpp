@@ -9,7 +9,7 @@
 int main(int argc, char *argv[]){
   
   if(argc < 2){
-    std::cout << "A route to dataset is needed\nExample: ./ej2_.out dataset/\n";
+    std::cout << "A route to dataset is needed\nExample: ./ej2_ dataset/\n";
     return 0;
   }
   
@@ -131,7 +131,15 @@ int main(int argc, char *argv[]){
   Print_vector(k2_size8, "k2_8");
   Print_vector(k2_size128, "k2_128");
   Print_vector(k2_size512, "k2_512");
+
+  /*
+  std::cout << "Probando dataset diff\n";
+
+  sdsl::int_vector<> base(8 * 8);
+  sdsl::bit_vector bmap(8 * 8 * 119);
   
+  Load_dataset_diff(bmap, route + "/8x8", base);
+  */
   
   return 0;
 }
