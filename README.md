@@ -5,9 +5,11 @@ Segundo proyecto de Estructuras de Datos y Algoritmos Avanzados. Estructuras de 
 
 ### 1) Instalar librería sdsl
 
+- Clonar repositorio
+
 > git clone https://github.com/simongog/sdsl-lite.git
 
-- Entrar al directorio de sdsl-lite e insertar el siguiente comando
+- Entrar al directorio de sdsl-lite e insertar el siguiente comando por consola
 
 > ./install.sh usr/local
 
@@ -29,8 +31,12 @@ Ejecutar por consola
 
 Para ejecutar calculo de entropía de los datasets (Item 1):
 
-> ./ej_1
+> ./ej_1 data/8x8
+
+> ./ej_1 data/128x128
+
+> ./ej_1 data/512x512
 
 Para ejecutar items del 2 al 5:
 
-> ./ej_2
+> ./ej_2 data
