@@ -1,0 +1,10 @@
+# Compiled
+*.o
+
+# Executables
+ej_1
+ej_2
+ej_6
+
+# Emacs save files
+*~
