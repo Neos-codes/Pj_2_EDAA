@@ -40,3 +40,7 @@ Para ejecutar calculo de entropía de los datasets (Item 1):
 Para ejecutar items del 2 al 5:
 
 > ./ej_2 data
+
+Para ejecutar item 6
+
+> ./ej_6 data
