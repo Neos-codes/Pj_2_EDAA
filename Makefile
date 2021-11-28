@@ -21,14 +21,15 @@ bit_test.o: bit_test.cpp
 data_utils.o: data_utils.cpp data_utils.h
 	g++ -c data_utils.cpp $(SDSL_FLAGS)
 
-ej_6: difference.o data_utils.o
-	g++ difference.o data_utils.o -o ej_6 $(SDSL_FLAGS)
+ej_6: difference.o data_utils.o compress_diff.o
+	g++ difference.o data_utils.o compress_diff.o -o ej_6 $(SDSL_FLAGS)
 	rm *.o
-
 
 difference.o: difference.cpp
 	g++ -c difference.cpp $(SDSL_FLAGS)
 
+compress_diff.o: compress_diff.cpp
+	g++ -c compress_diff.cpp $(SDSL_FLAGS)
 
 clean:
 	rm -f ej_1 ej_2 ej_6 *.o

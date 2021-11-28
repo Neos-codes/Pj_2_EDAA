@@ -34,12 +34,6 @@ int main(int argc, char *argv[]){
   sdsl::rrr_vector<> rrr_8(b_8);
   sdsl::rrr_vector<> rrr_128(b_128);
   sdsl::rrr_vector<> rrr_512(b_512);
-
-  std::cout << "rrr_vector 8x8: " << size_in_bytes(rrr_8); << std::endl;
-  
-  sdsl::sd_vector<> sd_8(b_8);
-  std::cout << size_in_bytes(sd_8);
-  sdsl::sd_vector<>::rank_1_type sd8_rank(&b_8);
   
 
   // Soportar ranks para rrr_vectors
@@ -69,9 +63,9 @@ int main(int argc, char *argv[]){
   std::vector<std::vector<int>> vadj_512;
 
   // Tamaños de los k2_tree para cada matriz de cada dataset
-  std::vector<int> k2_size8;
-  std::vector<int> k2_size128;
-  std::vector<int> k2_size512;
+  int k2_size8 = 0;
+  int k2_size128 = 0;
+  int k2_size512 = 0;
 
   sdsl::k2_tree<2> *k2;
   
@@ -94,7 +88,7 @@ int main(int argc, char *argv[]){
     // Crear un k2_tree para la matriz de 8x8 en instante t
     k2 = new sdsl::k2_tree<2>(vadj_8);
     // Pushear tamanio a un vector de tamanios de k2_trees para 8x8
-    k2_size8.push_back(size_in_bytes(*k2));
+    k2_size8 += size_in_bytes(*k2);
     // Eliminar el k2_tree una vez se guarda su tamanio
     delete k2;
 
@@ -113,7 +107,7 @@ int main(int argc, char *argv[]){
       vadj_128.push_back(aux);
     }
     k2 = new sdsl::k2_tree<2>(vadj_128);
-    k2_size128.push_back(size_in_bytes(*k2));
+    k2_size128 += size_in_bytes(*k2);
     delete k2;
 
     Clean_mat_vec(vadj_128);
@@ -132,26 +126,15 @@ int main(int argc, char *argv[]){
       vadj_512.push_back(aux);
     }
     k2 = new sdsl::k2_tree<2>(vadj_512);
-    k2_size512.push_back(size_in_bytes(*k2));
+    k2_size512 += size_in_bytes(*k2);
     delete k2;
 
     Clean_mat_vec(vadj_512);
   }
 
-  Print_vector(k2_size8, "k2_8");
-  Print_vector(k2_size128, "k2_128");
-  Print_vector(k2_size512, "k2_512");
-
-  
-  
-  /*
-  std::cout << "Probando dataset diff\n";
-
-  sdsl::int_vector<> base(8 * 8);
-  sdsl::bit_vector bmap(8 * 8 * 119);
-  
-  Load_dataset_diff(bmap, route + "/8x8", base);
-  */
+  std::cout << "Espacio total de k2_trees 8x8: " << k2_size8 << std::endl;
+  std::cout << "Espacio total de k2_trees 128x128: " << k2_size128 << std::endl;
+  std::cout << "Espacio total de k2_trees 512x512: " << k2_size512 << std::endl;
   
   return 0;
 }

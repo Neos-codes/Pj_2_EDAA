@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sdsl/vectors.hpp>
 #include <sdsl/bit_vectors.hpp>
+#include "compress_diff.cpp"
 #include "data_utils.h"
 #include <string>
 
@@ -18,29 +19,15 @@ int main(int argc, char *argv[]){
   // y un int vector que almacena los elementos distintos de las diferencias
 
   // Para dataset 8x8
-  sdsl::bit_vector b_8(8 * 8 * 119);
-  sdsl::int_vector<> base_8(8 * 8);
-  sdsl::int_vector<> *v_8 = Load_dataset_diff(b_8, route + "/8x8", base_8);
-
-  sdsl::util::bit_compress(base_8);
-  sdsl::util::bit_compress(*v_8);
-  
+  compress_diff data_8(8, route + "/8x8");
+  data_8.print_base();
+  data_8.print_diff_vector();
   
   // Para dataset 128x128
-  sdsl::bit_vector b_128(128 * 128 * 119);
-  sdsl::int_vector<> base_128(128 * 128);
-  sdsl::int_vector<> *v_128 = Load_dataset_diff(b_128, route+"/128x128", base_128);
-
-  sdsl::util::bit_compress(base_128);
-  sdsl::util::bit_compress(*v_128);
+  compress_diff data_128(128, route + "/128x128");
   
   // Para dataset 512x512
-  sdsl::bit_vector b_512(512 * 512 * 119);
-  sdsl::int_vector<> base_512(512 * 512);
-  sdsl::int_vector<> *v_512 = Load_dataset_diff(b_512,route+"/512x512", base_512);
-
-  sdsl::util::bit_compress(base_512);
-  sdsl::util::bit_compress(*v_512);
+  compress_diff data_512(512, route + "/512x512");
   
   
   // Nota: no se pueden representar negativos en int_vector
@@ -51,6 +38,9 @@ int main(int argc, char *argv[]){
   // Se utilizará esta mask para verificar numeros negativos
   uint64_t mask = (uint64_t)1 << 63;
 
+
+  
+  
   /*
   // Se castea de uint64_t a int64_t
   for(int i = 0; i < v_8 -> size(); i++){
