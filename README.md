@@ -5,9 +5,11 @@ Segundo proyecto de Estructuras de Datos y Algoritmos Avanzados. Estructuras de 
 
 ### 1) Instalar librería sdsl
 
+- Clonar repositorio
+
 > git clone https://github.com/simongog/sdsl-lite.git
 
-- Entrar al directorio de sdsl-lite e insertar el siguiente comando
+- Entrar al directorio de sdsl-lite e insertar el siguiente comando por consola
 
 > ./install.sh usr/local
 
