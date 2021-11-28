@@ -21,20 +21,27 @@ int main(int argc, char *argv[]){
   sdsl::bit_vector b_8(8 * 8 * 119);
   sdsl::int_vector<> base_8(8 * 8);
   sdsl::int_vector<> *v_8 = Load_dataset_diff(b_8, route + "/8x8", base_8);
+
+  sdsl::util::bit_compress(base_8);
+  sdsl::util::bit_compress(*v_8);
   
-  /*
+  
   // Para dataset 128x128
   sdsl::bit_vector b_128(128 * 128 * 119);
   sdsl::int_vector<> base_128(128 * 128);
   sdsl::int_vector<> *v_128 = Load_dataset_diff(b_128, route+"/128x128", base_128);
 
+  sdsl::util::bit_compress(base_128);
+  sdsl::util::bit_compress(*v_128);
+  
   // Para dataset 512x512
   sdsl::bit_vector b_512(512 * 512 * 119);
   sdsl::int_vector<> base_512(512 * 512);
   sdsl::int_vector<> *v_512 = Load_dataset_diff(b_512,route+"/512x512", base_512);
 
-  */
-
+  sdsl::util::bit_compress(base_512);
+  sdsl::util::bit_compress(*v_512);
+  
   
   // Nota: no se pueden representar negativos en int_vector
   // Para sortear el problema de las diferencias negativas, las temperaturas al
@@ -44,11 +51,13 @@ int main(int argc, char *argv[]){
   // Se utilizará esta mask para verificar numeros negativos
   uint64_t mask = (uint64_t)1 << 63;
 
+  /*
   // Se castea de uint64_t a int64_t
   for(int i = 0; i < v_8 -> size(); i++){
     std::cout << (int64_t)(*v_8)[i] << " ";
   }
   std::cout << std::endl;
+  */
 
   // Para la solucion del problema 7, solo de debe aplicar soportar rank e ir
   // sumandole al valor de la matriz base las diferencias en el vector v_n

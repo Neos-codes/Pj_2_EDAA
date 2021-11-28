@@ -26,3 +26,14 @@ sdsl::int_vector<> *Load_dataset_diff(sdsl::bit_vector &b, std::string route, sd
 
 
 #endif
+
+// Para ña 5
+// 26 26 29     26 27 27      0 1 1
+// 26 26 26     27 27 27      1 1 1
+// 26 26 26     27 27 27      1 1 1
+
+
+// Para la 6
+//  0 1 -2
+//  1 1 1
+//  1 1 1

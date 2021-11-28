@@ -26,13 +26,21 @@ int main(int argc, char *argv[]){
   sdsl::int_vector<> *v_8 = Load_dataset(b_8, route + "/8x8");  
   sdsl::int_vector<> *v_128 = Load_dataset(b_128, route + "/128x128");
   sdsl::int_vector<> *v_512 = Load_dataset(b_512, route + "/512x512");
-
+  
+  
   // Elementos ejercicio 4
   
   // rrr_vectors (dan un espacio mas pequeño)
   sdsl::rrr_vector<> rrr_8(b_8);
   sdsl::rrr_vector<> rrr_128(b_128);
   sdsl::rrr_vector<> rrr_512(b_512);
+
+  std::cout << "rrr_vector 8x8: " << size_in_bytes(rrr_8); << std::endl;
+  
+  sdsl::sd_vector<> sd_8(b_8);
+  std::cout << size_in_bytes(sd_8);
+  sdsl::sd_vector<>::rank_1_type sd8_rank(&b_8);
+  
 
   // Soportar ranks para rrr_vectors
   sdsl::rrr_vector<>::rank_1_type rrr8_rank(&rrr_8);
@@ -51,6 +59,8 @@ int main(int argc, char *argv[]){
   std::cout << "rrr_512: " << size_in_bytes(rrr_512) << std::endl;
 
 
+  // Hasta aqui la 4
+  
   // Elementos ejercicio 5
 
   // Matrices de adyacencia
@@ -132,6 +142,8 @@ int main(int argc, char *argv[]){
   Print_vector(k2_size128, "k2_128");
   Print_vector(k2_size512, "k2_512");
 
+  
+  
   /*
   std::cout << "Probando dataset diff\n";
 

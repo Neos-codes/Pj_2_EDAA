@@ -155,7 +155,6 @@ int Mats_diff(sdsl::bit_vector &b, std::vector<int> &diffs, int n_elements, std:
   // Si es el primer elemento que se lee, obligatoriamente se pushea un 1 al bitmap
   // y la diferencia al vector de diferencias
   if(diffs.size() == 0){
-    std::cout << "Diff size = " << diffs.size() << std::endl;
     // Tomamos numeros para calcular diferencia
     mat >> num;
     mat_1 >> num_1;
