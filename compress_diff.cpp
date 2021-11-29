@@ -55,11 +55,11 @@ class compress_diff{
     }
   }
 
-  // Printea el vector con las diferencias cuando las posiciones de las matrices
-  // son diferentes
+  // Printea el vector con las diferencias
   void print_diff_vector(){
     std::cout << "Vector with differences:\n";
     for(int i = 0; i < v.size(); i++){
+	// Para sortear el problema de los numeros negativos, se hace casteo a int64_t (con signo) antes de imprimir
       std::cout << (int64_t)v[i] << " ";
     }
     std::cout << std::endl << std::endl;
