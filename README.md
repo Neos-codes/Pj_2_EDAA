@@ -1,6 +1,12 @@
 # Pj_2_EDAA
 Segundo proyecto de Estructuras de Datos y Algoritmos Avanzados. Estructuras de datos compactas
 
+## Por
+
+> Fabián Cid   @Neos-codes
+> Rodolo Fariña   @rfarina97
+> Rodrigo Estay   @RodrigoEstay
+
 ## Como ejecutar (Solo Linux)
 
 ### 1) Instalar librería sdsl
