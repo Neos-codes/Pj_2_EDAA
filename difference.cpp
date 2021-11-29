@@ -20,14 +20,24 @@ int main(int argc, char *argv[]){
 
   // Para dataset 8x8
   compress_diff data_8(8, route + "/8x8");
-  data_8.print_base();
-  data_8.print_diff_vector();
+  //data_8.print_base();
+  //data_8.print_diff_vector();
+  std::cout << "\nCompressed Memory used: " << data_8.memory_used() << " MB\n";
+  std::cout << "Uncompressed memory used: " << data_8.uncompressed_memory_used() << " MB\n";
+  std::cout << "Compression ratio: " << data_8.memory_used() / data_8.uncompressed_memory_used() << std::endl << std::endl;
   
   // Para dataset 128x128
   compress_diff data_128(128, route + "/128x128");
+  std::cout << "\nCompressed Memory used: " << data_128.memory_used() << " MB\n";
+  std::cout << "Uncompressed memory used: " << data_128.uncompressed_memory_used() << " MB\n";
+  std::cout << "Compression ratio: " << data_128.memory_used() / data_128.uncompressed_memory_used() << std::endl << std::endl;
+  
   
   // Para dataset 512x512
   compress_diff data_512(512, route + "/512x512");
+  std::cout << "\nCompressed Memory used: " << data_512.memory_used() << " MB\n";
+  std::cout << "Uncompressed memory used: " << data_512.uncompressed_memory_used() << " MB\n";
+  std::cout << "Compression ratio: " << data_512.memory_used() / data_512.uncompressed_memory_used() << std::endl << std::endl;
   
   
   // Nota: no se pueden representar negativos en int_vector

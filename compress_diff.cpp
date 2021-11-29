@@ -76,23 +76,14 @@ class compress_diff{
   }
 
 
-  // Retorna la matriz de adyacencia para el k2_tree en el instante t. t > 1
-  std::vector<std::vector<int>> *adj_matrix(int t){
-    // Si se ingresa un t no valido, retornar nulo
-    if(t < 1 || t > 120){
-      std::cout << "t debe estar en el intervalo [1, 120]\n";
-      return NULL;
-    }
+  double memory_used(){
+    // In MB
+    return (diff_vector_size() + base_size() + size_in_bytes(r)) / (double)1024;
+  }
 
-    // Soportamos la operanción rank
-    sdsl::rrr_vector<>::rank_1_type rank(&r);
-    
-    std::vector<std::vector<int>> adj;
-    t -= 1;
-    
-
-    
-    
+  double uncompressed_memory_used(){
+    // In MB
+    return (r.size() * 4) / (double)1024;
   }
 
 };
