@@ -4,7 +4,9 @@ Segundo proyecto de Estructuras de Datos y Algoritmos Avanzados. Estructuras de 
 ## Por
 
 > Fabián Cid   @Neos-codes
+
 > Rodolo Fariña   @rfarina97
+
 > Rodrigo Estay   @RodrigoEstay
 
 ## Como ejecutar (Solo Linux)
